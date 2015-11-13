@@ -211,140 +211,39 @@ public class Checker implements Visitor<Type,Env<Type>> {
 	}
 
 	public Type visit(CarExp e, Env<Type> env) {
-		Exp exp = e.arg();
-		Type type = (Type)exp.accept(this, env);
-		if (type instanceof ErrorT) { return type; }
-
-		if (type instanceof PairT) {
-			PairT pt = (PairT)type;
-			return pt.fst();
-		}
-
-		return new ErrorT("The car expect an expression of type Pair, found "
-				+ type.tostring() + " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(CdrExp e, Env<Type> env) {
-		Exp exp = e.arg();
-		Type type = (Type)exp.accept(this, env);
-		if (type instanceof ErrorT) { return type; }
-
-		if (type instanceof PairT) {
-			PairT pt = (PairT)type;
-			return pt.snd();
-		}
-
-		return new ErrorT("The cdr expect an expression of type Pair, found "
-				+ type.tostring() + " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(ConsExp e, Env<Type> env) {
-		Exp fst = e.fst(); 
-		Exp snd = e.snd();
-
-		Type t1 = (Type)fst.accept(this, env);
-		if (t1 instanceof ErrorT) { return t1; }
-
-		Type t2 = (Type)snd.accept(this, env);
-		if (t2 instanceof ErrorT) { return t2; }
-
-		return new PairT(t1, t2);
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(ListExp e, Env<Type> env) {
-		List<Exp> elems = e.elems();
-		Type type = e.type();
-
-		int index = 0;
-		for (Exp elem : elems) {
-			Type elemType = (Type)elem.accept(this, env);
-			if (elemType instanceof ErrorT) { return elemType; }
-
-			if (!assignable(type, elemType)) {
-				return new ErrorT("The " + index +
-						" expression should have type " + type.tostring() +
-						" found " + elemType.tostring() + " in " +
-						ts.visit(e, null));
-			}
-			index++;
-		}
-		return new ListT(type);
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(NullExp e, Env<Type> env) {
-		Exp arg = e.arg();
-		Type type = (Type)arg.accept(this, env);
-		if (type instanceof ErrorT) { return type; }
-
-		if (type instanceof ListT) { return BoolT.getInstance(); }
-
-		return new ErrorT("The null? expect an expression of type List, found "
-				+ type.tostring() + " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(RefExp e, Env<Type> env) {
-		Exp value = e.value_exp();
-		Type type = e.type();
-		Type expType = (Type)value.accept(this, env);
-		if (type instanceof ErrorT) { return type; }
-
-		if (expType.typeEqual(type)) {
-			return new RefT(type);
-		}
-
-		return new ErrorT("The Ref expression expect type " + type.tostring() +
-				" found " + expType.tostring() + " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(DerefExp e, Env<Type> env) {
-		Exp exp = e.loc_exp();
-		Type type = (Type)exp.accept(this, env);
-		if (type instanceof ErrorT) { return type; }
-
-		if (type instanceof RefT) {
-			RefT rt = (RefT)type;
-			return rt.nestType();
-		}
-
-		return new ErrorT("The dereference expression expect a reference type " +
-				"found " + type.tostring() + " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(AssignExp e, Env<Type> env) {
-		Exp lhs_exp = e.lhs_exp();
-		Type lhsType = (Type)lhs_exp.accept(this, env);
-		if (lhsType instanceof ErrorT) { return lhsType; }
-
-        if (lhsType instanceof RefT) {
-        	Exp rhs_exp = e.rhs_exp();
-            Type rhsType = (Type)rhs_exp.accept(this, env);
-            if (rhsType instanceof ErrorT) { return rhsType; }
-
-        	RefT rt = (RefT)lhsType;
-        	Type nested = rt.nestType();
-
-        	if (rhsType.typeEqual(nested)) { return rhsType; }
-
-        	return new ErrorT("The inner type of the reference type is " +
-        			nested.tostring() + " the rhs type is " + rhsType.tostring()
-        			+ " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
         }
 
-        return new ErrorT("The lhs of the assignment expression expect a "
-        		+ "reference type found " + lhsType.tostring() + " in " +
-        		ts.visit(e, null));
-	}
-
 	public Type visit(FreeExp e, Env<Type> env) {
-		Exp exp = e.value_exp();
-		Type type = (Type)exp.accept(this, env);
-
-		if (type instanceof ErrorT) { return type; }
-
-		if (type instanceof RefT) { return UnitT.getInstance(); }
-
-		return new ErrorT("The free expression expect a reference type " +
-				"found " + type.tostring() + " in " + ts.visit(e, null));
+	 	return new ErrorT("TODO: Readers should implement this");
 	}
 
 	public Type visit(UnitExp e, Env<Type> env) {
